@@ -20,5 +20,39 @@ angular.module('bRobot', ['ionic'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
+    ble.isEnabled(
+      function(){ 
+        // Bluetooth is enabled
+      },
+      function(){
+        // Bluetooth not yet enabled so we try to enable it
+        ble.enable(
+          function(){
+            // bluetooth now enabled
+
+          },
+          function(err){
+            alert('Cannot enable bluetooth');
+          }
+        );
+      }
+    );
   });
 })
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+  
+  .state('home', {
+    url: '/home',
+    templateUrl: 'templates/home.html'
+  })
+
+  .state('device', {
+    url:'/device/:id',
+    templateUrl: 'templates/device.html'
+  });
+
+  $urlRouterProvider.otherwise('/home');
+});
